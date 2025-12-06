@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,43 +15,60 @@ const sizeClasses = {
 };
 
 export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
+      dialog.showModal();
       document.body.style.overflow = 'hidden';
+    } else {
+      dialog.close();
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = '';
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const handleCancel = (e: Event) => {
+      e.preventDefault();
+      onClose();
+    };
+
+    dialog.addEventListener('cancel', handleCancel);
+    return () => dialog.removeEventListener('cancel', handleCancel);
+  }, [onClose]);
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDialogElement>) => {
+    if (e.target === dialogRef.current) {
+      onClose();
+    }
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <button
-        type="button"
-        onClick={onClose}
-        className="absolute inset-0 w-full h-full cursor-default bg-transparent border-none"
-        aria-label="Modal schließen"
-      />
+    <dialog
+      ref={dialogRef}
+      onClick={handleBackdropClick}
+      aria-labelledby="modal-title"
+      className="fixed inset-0 z-50 m-auto bg-transparent p-0 backdrop:bg-black/50"
+    >
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-        className={`relative bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} mx-4 max-h-[90vh] flex flex-col`}
+        className={`bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
           <h2 id="modal-title" className="text-lg font-semibold text-gray-900 dark:text-white">
             {title}
           </h2>
           <button
+            type="button"
             onClick={onClose}
             className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded"
           >
@@ -64,6 +81,6 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
           {children}
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
