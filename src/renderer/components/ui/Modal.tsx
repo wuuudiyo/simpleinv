@@ -43,20 +43,23 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       onClose();
     };
 
-    dialog.addEventListener('cancel', handleCancel);
-    return () => dialog.removeEventListener('cancel', handleCancel);
-  }, [onClose]);
+    const handleBackdropClick = (e: MouseEvent) => {
+      if (e.target === dialog) {
+        onClose();
+      }
+    };
 
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDialogElement>) => {
-    if (e.target === dialogRef.current) {
-      onClose();
-    }
-  };
+    dialog.addEventListener('cancel', handleCancel);
+    dialog.addEventListener('click', handleBackdropClick);
+    return () => {
+      dialog.removeEventListener('cancel', handleCancel);
+      dialog.removeEventListener('click', handleBackdropClick);
+    };
+  }, [onClose]);
 
   return (
     <dialog
       ref={dialogRef}
-      onClick={handleBackdropClick}
       aria-labelledby="modal-title"
       className="fixed inset-0 z-50 m-auto bg-transparent p-0 backdrop:bg-black/50"
     >
