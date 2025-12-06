@@ -79,8 +79,8 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
       newErrors.title = 'Titel ist erforderlich';
     }
 
-    const purchasePrice = parseFloat(formData.purchasePrice);
-    if (formData.purchasePrice === '' || isNaN(purchasePrice)) {
+    const purchasePrice = Number.parseFloat(formData.purchasePrice);
+    if (formData.purchasePrice === '' || Number.isNaN(purchasePrice)) {
       newErrors.purchasePrice = 'Kaufpreis ist erforderlich';
     } else if (purchasePrice < 0) {
       newErrors.purchasePrice = 'Kaufpreis muss >= 0 sein';
@@ -99,14 +99,14 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
       categoryId: formData.categoryId,
       status: formData.status,
       purchasePlatform: formData.purchasePlatform || undefined,
-      purchasePrice: parseFloat(formData.purchasePrice),
+      purchasePrice: Number.parseFloat(formData.purchasePrice),
       purchaseDate: formData.purchaseDate || undefined,
-      shippingCostIn: formData.shippingCostIn ? parseFloat(formData.shippingCostIn) : undefined,
+      shippingCostIn: formData.shippingCostIn ? Number.parseFloat(formData.shippingCostIn) : undefined,
       salePlatform: formData.salePlatform || undefined,
-      salePrice: formData.salePrice ? parseFloat(formData.salePrice) : undefined,
+      salePrice: formData.salePrice ? Number.parseFloat(formData.salePrice) : undefined,
       saleDate: formData.saleDate || undefined,
-      fees: formData.fees ? parseFloat(formData.fees) : undefined,
-      shippingCostOut: formData.shippingCostOut ? parseFloat(formData.shippingCostOut) : undefined,
+      fees: formData.fees ? Number.parseFloat(formData.fees) : undefined,
+      shippingCostOut: formData.shippingCostOut ? Number.parseFloat(formData.shippingCostOut) : undefined,
     };
 
     await onSubmit(input);
@@ -139,10 +139,11 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
           Basis
         </h3>
         <div>
-          <label className={labelClass}>
+          <label htmlFor="article-title" className={labelClass}>
             Titel <span className="text-red-500">*</span>
           </label>
           <input
+            id="article-title"
             type="text"
             value={formData.title}
             onChange={(e) => handleChange('title', e.target.value)}
@@ -153,11 +154,12 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
         </div>
 
         <div>
-          <label className={labelClass}>Kategorie</label>
+          <label htmlFor="article-category" className={labelClass}>Kategorie</label>
           <select
+            id="article-category"
             value={formData.categoryId ?? ''}
             onChange={(e) =>
-              handleChange('categoryId', e.target.value ? parseInt(e.target.value) : null)
+              handleChange('categoryId', e.target.value ? Number.parseInt(e.target.value) : null)
             }
             className={inputClass('categoryId')}
           >
@@ -171,8 +173,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
         </div>
 
         <div>
-          <label className={labelClass}>Status</label>
+          <label htmlFor="article-status" className={labelClass}>Status</label>
           <select
+            id="article-status"
             value={formData.status}
             onChange={(e) => handleChange('status', e.target.value as ArticleStatus)}
             className={inputClass('status')}
@@ -192,8 +195,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
           Einkauf
         </h3>
         <div>
-          <label className={labelClass}>Plattform</label>
+          <label htmlFor="article-purchase-platform" className={labelClass}>Plattform</label>
           <input
+            id="article-purchase-platform"
             type="text"
             value={formData.purchasePlatform}
             onChange={(e) => handleChange('purchasePlatform', e.target.value)}
@@ -204,10 +208,11 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>
+            <label htmlFor="article-purchase-price" className={labelClass}>
               Kaufpreis (€) <span className="text-red-500">*</span>
             </label>
             <input
+              id="article-purchase-price"
               type="number"
               step="0.01"
               min="0"
@@ -221,8 +226,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
             )}
           </div>
           <div>
-            <label className={labelClass}>Kaufdatum</label>
+            <label htmlFor="article-purchase-date" className={labelClass}>Kaufdatum</label>
             <input
+              id="article-purchase-date"
               type="date"
               value={formData.purchaseDate}
               onChange={(e) => handleChange('purchaseDate', e.target.value)}
@@ -232,8 +238,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
         </div>
 
         <div>
-          <label className={labelClass}>Versandkosten (eingehend, €)</label>
+          <label htmlFor="article-shipping-cost-in" className={labelClass}>Versandkosten (eingehend, €)</label>
           <input
+            id="article-shipping-cost-in"
             type="number"
             step="0.01"
             min="0"
@@ -251,8 +258,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
           Verkauf
         </h3>
         <div>
-          <label className={labelClass}>Plattform</label>
+          <label htmlFor="article-sale-platform" className={labelClass}>Plattform</label>
           <input
+            id="article-sale-platform"
             type="text"
             value={formData.salePlatform}
             onChange={(e) => handleChange('salePlatform', e.target.value)}
@@ -263,8 +271,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Verkaufspreis (€)</label>
+            <label htmlFor="article-sale-price" className={labelClass}>Verkaufspreis (€)</label>
             <input
+              id="article-sale-price"
               type="number"
               step="0.01"
               min="0"
@@ -275,8 +284,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
             />
           </div>
           <div>
-            <label className={labelClass}>Verkaufsdatum</label>
+            <label htmlFor="article-sale-date" className={labelClass}>Verkaufsdatum</label>
             <input
+              id="article-sale-date"
               type="date"
               value={formData.saleDate}
               onChange={(e) => handleChange('saleDate', e.target.value)}
@@ -287,8 +297,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Gebühren (€)</label>
+            <label htmlFor="article-fees" className={labelClass}>Gebühren (€)</label>
             <input
+              id="article-fees"
               type="number"
               step="0.01"
               min="0"
@@ -299,8 +310,9 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
             />
           </div>
           <div>
-            <label className={labelClass}>Versandkosten (ausgehend, €)</label>
+            <label htmlFor="article-shipping-cost-out" className={labelClass}>Versandkosten (ausgehend, €)</label>
             <input
+              id="article-shipping-cost-out"
               type="number"
               step="0.01"
               min="0"
