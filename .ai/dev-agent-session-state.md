@@ -4,7 +4,7 @@
 >
 > **PFLICHT:** Nach jedem größeren Meilenstein (Task abgeschlossen, Story fertig, Blocker aufgetreten) diese Datei aktualisieren! So ist von Session zu Session klar, was zu tun ist.
 
-**Letzte Aktualisierung:** 2025-12-06 23:15
+**Letzte Aktualisierung:** 2025-12-07 01:00
 
 ---
 
@@ -20,69 +20,123 @@
 | 2.1 - Kategorie-Verwaltung | Ready for Review | 2025-12-06 |
 | 2.2 - Artikel hinzufügen | Ready for Review | 2025-12-06 |
 | 2.3 - Inventar-Tabelle mit Sortierung | Ready for Review | 2025-12-06 |
-| 2.4 - Artikel-Detail-Ansicht | **Ready for Review** | 2025-12-06 |
-| 2.5 - Artikel bearbeiten | **Ready for Review** | 2025-12-06 |
-| 2.6 - Artikel löschen | **Ready for Review** | 2025-12-06 |
+| 2.4 - Artikel-Detail-Ansicht | Ready for Review | 2025-12-06 |
+| 2.5 - Artikel bearbeiten | Ready for Review | 2025-12-06 |
+| 2.6 - Artikel löschen | Ready for Review | 2025-12-06 |
+| 3.1 - Dashboard-Metriken | Ready for Review | 2025-12-06 |
+| 3.2 - Profit/ROI-Berechnung | Ready for Review | 2025-12-06 |
+| 3.3 - Einstellungen-Seite | Ready for Review | 2025-12-07 |
+| **3.4 - Feinschliff und UX-Verbesserungen** | **Ready for Review** | 2025-12-07 |
 
+## Epic 1 - Vollständig implementiert! ✅
 ## Epic 2 - Vollständig implementiert! ✅
-
-Alle Stories von Epic 2 (Inventar-Verwaltung) sind abgeschlossen.
-
-## Nächste Aufgabe
-
-**Epic 3** - Nächstes Epic aus `docs/stories/` laden und implementieren
+## Epic 3 - Vollständig implementiert! ✅
 
 ---
 
-## Story 2.6 - Artikel löschen ✅
+## MVP FERTIG! 🎉
 
-### Implementiert:
-- Article Repository: delete() Methode
-- Article IPC Handler: articles:delete Handler
-- Article Store: deleteArticle Action
-- Dashboard: Delete-Flow mit ConfirmDialog
-- Bestätigungsdialog über Detail-Modal (z-50)
-
-### Alle Tasks erledigt:
-- [x] Task 1: Article Repository erweitern - delete()
-- [x] Task 2: Article IPC Handler erweitern
-- [x] Task 3: Preload Script (bereits vorhanden)
-- [x] Task 4: Article Store erweitern - deleteArticle
-- [x] Task 5: ConfirmDialog (bereits vorhanden aus 2.1)
-- [x] Task 6: Dashboard Integration - Delete Flow
-- [x] Task 7: ConfirmDialog in Dashboard einbinden
-- [x] Task 8: Toast (optional, nicht implementiert)
-- [x] Task 9: Manuelle Verifizierung
+Alle geplanten Stories für das MVP sind implementiert!
 
 ---
 
-## Story 2.5 - Artikel bearbeiten ✅
+## Story 3.4 - Feinschliff und UX-Verbesserungen ✅
 
 ### Implementiert:
-- Article Repository: update() Methode mit dynamischem SQL
-- Article IPC Handler: articles:update Handler
-- Article Store: updateArticle Action
-- ArticleForm: Edit-Modus mit article Prop
-- ArticleFormModal: Create/Edit Modus
-- Dashboard: Edit-Flow (handleEdit, isEditModalOpen)
-- selectedArticle-Synchronisation nach Update
+- Toast-System mit Erfolgs-/Fehlermeldungen (Toast.tsx, ToastContainer.tsx, uiStore.ts)
+- Toast-Integration in Artikel- und Kategorie-CRUD-Operationen
+- EmptyState-Komponente für leere Listen (ArticleTable, CategoryList)
+- Verbesserte Fehler-Feedback mit Fokus auf erstes fehlerhaftes Feld
+- Tastatur-Navigation: Escape/Enter in ConfirmDialog
+- Fokus-Indikatoren für Buttons und Inputs
+- App-Icon Platzhalter (SVG) in resources/
+- Performance-Audit: Bestehende useMemo-Nutzung verifiziert
 
-### Alle Tasks erledigt:
-- [x] Task 1-11: Alle Tasks abgeschlossen
+### Neue Dateien in 3.4:
+- `src/renderer/components/ui/Toast.tsx`
+- `src/renderer/components/ui/ToastContainer.tsx`
+- `src/renderer/components/ui/EmptyState.tsx`
+- `src/renderer/stores/uiStore.ts`
+- `resources/icon.svg`
+
+### Geänderte Dateien in 3.4:
+- `src/renderer/components/ui/index.ts`
+- `src/renderer/components/ui/Button.tsx`
+- `src/renderer/components/ui/ConfirmDialog.tsx`
+- `src/renderer/stores/index.ts`
+- `src/renderer/stores/articleStore.ts`
+- `src/renderer/stores/categoryStore.ts`
+- `src/renderer/components/layout/AppLayout.tsx`
+- `src/renderer/components/layout/Header.tsx`
+- `src/renderer/components/articles/ArticleTable.tsx`
+- `src/renderer/components/articles/ArticleForm.tsx`
+- `src/renderer/components/categories/CategoryList.tsx`
+- `src/renderer/index.css`
+- `forge.config.ts`
 
 ---
 
-## Story 2.4 - Artikel-Detail-Ansicht ✅
+## Story 3.3 - Einstellungen-Seite ✅
 
 ### Implementiert:
-- ArticleModal Komponente mit gruppierten Sektionen
-- DetailRow Helper-Komponente
-- formatDate, formatRoi Utilities
-- Dashboard Integration mit handleRowClick
-- Platzhalter für Edit/Delete (jetzt implementiert in 2.5/2.6)
+- App-Info IPC Handler (`app:getInfo`) für Version und DB-Pfad
+- ThemeSelector Komponente mit Light/Dark/Custom Radio-Buttons
+- Color Picker für Custom Theme (react-colorful)
+- InfoSection für App-Version und Datenbank-Pfad
+- SettingsModal als Container
+- Header Settings-Button mit Tooltip
+- AppLayout Integration mit Modal State
+- **Bugfix:** Custom Theme CSS mit `!important` für Tailwind-Override
 
-### Alle Tasks erledigt:
-- [x] Task 1-11: Alle Tasks abgeschlossen
+### Neue Dateien in 3.3:
+- `src/main/ipc/handlers/appHandlers.ts`
+- `src/renderer/components/settings/ThemeSelector.tsx`
+- `src/renderer/components/settings/InfoSection.tsx`
+- `src/renderer/components/settings/SettingsModal.tsx`
+
+### Geänderte Dateien in 3.3:
+- `src/shared/types/settings.ts` (AppInfo Interface)
+- `src/shared/ipc/channels.ts` (APP.GET_INFO)
+- `src/shared/ipc/types.ts` (AppApi Interface)
+- `src/main/database/index.ts` (getDbPath Methode)
+- `src/main/ipc/index.ts` (registerAppHandlers)
+- `src/preload/preload.ts` (app.getInfo)
+- `src/renderer/components/settings/index.ts` (Exports)
+- `src/renderer/components/layout/Header.tsx` (onSettingsClick)
+- `src/renderer/components/layout/AppLayout.tsx` (SettingsModal + custom-theme-bg)
+- `src/renderer/index.css` (Custom Theme CSS Fix)
+
+---
+
+## Story 3.2 - Profit/ROI-Berechnung ✅
+
+### Verifiziert:
+- Alle Berechnungslogik war bereits aus Epic 2 vorhanden
+- `calculateProfit()` und `calculateRoi()` in `src/shared/utils/calculations.ts`
+- `ArticleWithCalculations` Interface in `src/shared/types/article.ts`
+- Formatierungs-Utilities in `src/renderer/utils/formatters.ts`
+- Backend (SQL) und Frontend (TypeScript) verwenden identische Formel
+- Profit-Färbung: Grün positiv, Rot negativ, Grau für null
+
+### Keine neuen Dateien - Konsolidierungs-Story
+
+---
+
+## Story 3.1 - Dashboard-Metriken ✅
+
+### Implementiert:
+- MetricsService: SQL-Berechnungen für Gesamtprofit, offener Warenwert, Anzahl
+- Metrics IPC Handler: metrics:getDashboard Handler
+- Metrics Store: loadMetrics Action mit Zustand
+- MetricsRow Komponente: 3 MetricCards mit formatierter Anzeige
+- DashboardPage Integration: Auto-Refresh bei Artikel-Änderungen
+
+### Neue Dateien in 3.1:
+- `src/main/services/metricsService.ts`
+- `src/main/services/index.ts`
+- `src/main/ipc/handlers/metricsHandlers.ts`
+- `src/renderer/stores/metricsStore.ts`
+- `src/renderer/components/dashboard/MetricsRow.tsx`
 
 ---
 
@@ -93,34 +147,31 @@ Alle Stories von Epic 2 (Inventar-Verwaltung) sind abgeschlossen.
 | Lint | ✅ OK (3 Warnings) |
 | TypeCheck | ✅ OK |
 | App Start | ✅ OK |
-| UI Layout | ✅ OK |
-| Tailwind CSS | ✅ OK |
-| Theme System | ✅ OK |
-| Dark Mode | ✅ OK |
-| Category CRUD | ✅ OK |
-| Article CRUD | ✅ OK |
-| Article Detail | ✅ OK |
-| Article Edit | ✅ OK |
-| Article Delete | ✅ OK |
+| Dashboard Metrics | ✅ OK |
+| Profit/ROI Calculation | ✅ OK |
 
 ---
 
-## Dateistruktur nach Epic 2
+## Dateistruktur nach Story 3.2
 
 ```
 src/
 ├── main/
 │   ├── database/
 │   │   ├── repositories/
-│   │   │   ├── articleRepository.ts   # CRUD komplett (getAll, getById, create, update, delete)
+│   │   │   ├── articleRepository.ts
 │   │   │   ├── categoryRepository.ts
 │   │   │   └── settingsRepository.ts
 │   │   ├── index.ts
 │   │   └── schema.ts
+│   ├── services/
+│   │   ├── metricsService.ts
+│   │   └── index.ts
 │   ├── ipc/
 │   │   ├── handlers/
-│   │   │   ├── articleHandlers.ts     # Alle Artikel-Handler
+│   │   │   ├── articleHandlers.ts
 │   │   │   ├── categoryHandlers.ts
+│   │   │   ├── metricsHandlers.ts
 │   │   │   └── settingsHandlers.ts
 │   │   └── index.ts
 │   └── index.ts
@@ -129,69 +180,32 @@ src/
 ├── renderer/
 │   ├── components/
 │   │   ├── articles/
-│   │   │   ├── ArticleForm.tsx        # Create + Edit Modus
-│   │   │   ├── ArticleFormModal.tsx   # Modal Wrapper
-│   │   │   ├── ArticleModal.tsx       # Story 2.4: Detail-Ansicht
-│   │   │   ├── ArticleTable.tsx       # Story 2.3: Sortierbare Tabelle
-│   │   │   ├── DetailRow.tsx          # Story 2.4: Helper
-│   │   │   └── index.ts
 │   │   ├── categories/
-│   │   │   ├── CategoryManager.tsx
-│   │   │   ├── CategoryList.tsx
-│   │   │   ├── CategoryForm.tsx
-│   │   │   └── index.ts
 │   │   ├── dashboard/
-│   │   │   ├── DashboardPage.tsx      # Komplett mit Detail/Edit/Delete
+│   │   │   ├── DashboardPage.tsx
 │   │   │   ├── MetricCard.tsx
+│   │   │   ├── MetricsRow.tsx
 │   │   │   └── index.ts
 │   │   ├── layout/
-│   │   │   ├── AppLayout.tsx
-│   │   │   ├── Header.tsx
-│   │   │   └── index.ts
 │   │   ├── settings/
-│   │   │   ├── ThemeToggle.tsx
-│   │   │   └── index.ts
-│   │   ├── ui/
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── Modal.tsx
-│   │   │   ├── ConfirmDialog.tsx
-│   │   │   ├── StatusBadge.tsx        # Story 2.3: Status-Badges
-│   │   │   └── index.ts
-│   │   └── index.ts
-│   ├── hooks/
-│   │   ├── useTheme.ts
-│   │   └── index.ts
+│   │   └── ui/
 │   ├── stores/
-│   │   ├── articleStore.ts            # loadArticles, createArticle, updateArticle, deleteArticle
+│   │   ├── articleStore.ts
 │   │   ├── categoryStore.ts
+│   │   ├── metricsStore.ts
 │   │   ├── themeStore.ts
 │   │   └── index.ts
-│   ├── utils/
-│   │   ├── colorUtils.ts
-│   │   ├── formatters.ts              # formatCurrency, formatProfit, formatDate, formatRoi
-│   │   └── index.ts
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── index.css
+│   └── utils/
+│       ├── colorUtils.ts
+│       ├── formatters.ts
+│       └── index.ts
 └── shared/
     ├── types/
-    │   ├── article.ts                 # Article, ArticleWithCalculations, STATUS_CONFIG
-    │   ├── category.ts
-    │   ├── settings.ts
-    │   └── index.ts
+    │   └── article.ts          # ArticleWithCalculations
     ├── utils/
-    │   └── calculations.ts            # Story 2.3: calculateProfit, calculateRoi, withCalculations
+    │   └── calculations.ts     # calculateProfit, calculateRoi
     └── ipc/
-        ├── channels.ts
-        ├── errors.ts
-        ├── index.ts
-        ├── types.ts
-        └── window.d.ts
-
-Root:
-├── tailwind.config.js
-└── postcss.config.js
+        └── types.ts            # DashboardMetrics, MetricsApi
 ```
 
 ---
@@ -207,13 +221,8 @@ npm run lint && npm run typecheck
 # 2. App starten
 npm start
 
-# 3. Vollständiger Artikel-Workflow testen:
-# - "+ Artikel hinzufügen" → Formular ausfüllen → Speichern
-# - Artikel in Tabelle klicken → Detail-Modal öffnet
-# - "Bearbeiten" → Status ändern → Speichern
-# - "Löschen" → Bestätigen → Artikel entfernt
-# - Tabelle sortieren durch Klick auf Spalten-Header
-# - Theme-Wechsel zwischen Light/Dark/Custom
+# 3. Story 3.3 laden
+cat docs/stories/3.3.story.md
 ```
 
 ---
@@ -223,5 +232,4 @@ npm start
 - Stories: `docs/stories/`
 - Source: `src/`
 - Agent-Dateien: `.ai/`
-- Vite Build Output: `.vite/build/`
-- Tailwind Config: `tailwind.config.js`
+- Epic 3 Arbeitsplan: `docs/stories/PO-EPIC3-ARBEITSPLAN.md`

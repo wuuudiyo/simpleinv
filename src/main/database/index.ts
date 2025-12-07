@@ -32,6 +32,10 @@ class DatabaseService {
     return this.db;
   }
 
+  getDbPath(): string {
+    return this.dbPath;
+  }
+
   close(): void {
     this.db?.close();
     this.db = null;

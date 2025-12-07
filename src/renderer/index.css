@@ -8,10 +8,24 @@
     @apply dark:bg-gray-900 dark:text-gray-100;
   }
 
-  /* Custom Mode Background */
-  .custom body {
-    background-color: var(--custom-bg-color, #3B82F6);
+  /* Custom Mode Background - override tailwind classes */
+  :root.custom,
+  :root.custom body,
+  :root.custom .custom-theme-bg {
+    background-color: var(--custom-bg-color, #3B82F6) !important;
     color: var(--custom-text-color, #F9FAFB);
+  }
+
+  /* Fokus-Indikatoren für alle interaktiven Elemente */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply outline-none ring-2 ring-blue-500 border-transparent;
+  }
+
+  /* Dark mode Fokus-Ring offset Farbe */
+  .dark *:focus {
+    --tw-ring-offset-color: #1f2937;
   }
 }
 

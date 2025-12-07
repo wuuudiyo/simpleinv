@@ -43,6 +43,8 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       onClose();
     };
 
+    // Use mousedown instead of click to prevent closing when dragging text
+    // and accidentally releasing outside the modal content
     const handleBackdropClick = (e: MouseEvent) => {
       if (e.target === dialog) {
         onClose();
@@ -50,10 +52,10 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
     };
 
     dialog.addEventListener('cancel', handleCancel);
-    dialog.addEventListener('click', handleBackdropClick);
+    dialog.addEventListener('mousedown', handleBackdropClick);
     return () => {
       dialog.removeEventListener('cancel', handleCancel);
-      dialog.removeEventListener('click', handleBackdropClick);
+      dialog.removeEventListener('mousedown', handleBackdropClick);
     };
   }, [onClose]);
 

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Article, ArticleInput } from '../../shared/types/article';
+import { toast } from './uiStore';
 
 interface ArticleState {
   articles: Article[];
@@ -27,6 +28,7 @@ export const useArticleStore = create<ArticleState>((set) => ({
       set({ articles, isLoading: false });
     } catch (error) {
       set({ error: String(error), isLoading: false });
+      toast.error('Fehler beim Laden der Artikel');
     }
   },
 
@@ -38,9 +40,11 @@ export const useArticleStore = create<ArticleState>((set) => ({
         articles: [article, ...state.articles],
         error: null,
       }));
+      toast.success('Artikel erstellt');
       return article;
     } catch (error) {
       set({ error: String(error) });
+      toast.error('Fehler beim Erstellen des Artikels');
       throw error;
     }
   },
@@ -53,9 +57,11 @@ export const useArticleStore = create<ArticleState>((set) => ({
         articles: state.articles.map((a) => (a.id === id ? updatedArticle : a)),
         error: null,
       }));
+      toast.success('Artikel aktualisiert');
       return updatedArticle;
     } catch (error) {
       set({ error: String(error) });
+      toast.error('Fehler beim Aktualisieren des Artikels');
       throw error;
     }
   },
@@ -68,8 +74,10 @@ export const useArticleStore = create<ArticleState>((set) => ({
         articles: state.articles.filter((a) => a.id !== id),
         error: null,
       }));
+      toast.success('Artikel gelöscht');
     } catch (error) {
       set({ error: String(error) });
+      toast.error('Fehler beim Löschen des Artikels');
       throw error;
     }
   },

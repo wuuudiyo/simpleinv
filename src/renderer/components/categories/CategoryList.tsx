@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Category } from '../../../shared/types/category';
+import { EmptyState, FolderIcon } from '../ui';
 
 interface CategoryListProps {
   categories: Category[];
@@ -45,9 +46,11 @@ export function CategoryList({ categories, onUpdate, onDelete }: CategoryListPro
 
   if (categories.length === 0) {
     return (
-      <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
-        Keine Kategorien vorhanden
-      </p>
+      <EmptyState
+        icon={<FolderIcon className="w-10 h-10" />}
+        title="Keine Kategorien vorhanden"
+        description="Erstellen Sie Ihre erste Kategorie oben."
+      />
     );
   }
 

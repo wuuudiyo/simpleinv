@@ -9,6 +9,11 @@ export interface AppSettings {
   theme: ThemeSettings;
 }
 
+export interface AppInfo {
+  version: string;
+  dbPath: string;
+}
+
 export const SETTING_KEYS = {
   THEME: 'theme',
 } as const;

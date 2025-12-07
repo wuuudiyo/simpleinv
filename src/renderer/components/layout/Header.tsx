@@ -1,13 +1,21 @@
 import { ThemeToggle } from '../settings';
 
-export function Header() {
+interface HeaderProps {
+  onSettingsClick?: () => void;
+}
+
+export function Header({ onSettingsClick }: HeaderProps) {
   return (
     <header className="h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6">
       <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">SimpleInv</h1>
       <div className="flex items-center gap-3">
         <ThemeToggle />
         {/* Settings Icon */}
-        <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+        <button
+          onClick={onSettingsClick}
+          title="Einstellungen"
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+        >
           <svg
             className="w-5 h-5 text-gray-500 dark:text-gray-400"
             fill="none"

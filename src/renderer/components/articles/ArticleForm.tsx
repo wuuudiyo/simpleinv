@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Article, ArticleInput, ArticleStatus } from '../../../shared/types/article';
 import { STATUS_OPTIONS } from '../../../shared/types/article';
 import { useCategoryStore } from '../../stores';
@@ -44,10 +44,13 @@ const initialFormData: FormData = {
 export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: ArticleFormProps) {
   const isEditMode = article !== undefined;
 
-  // Initial-State aus article Prop befüllen (Edit) oder leer (Create)
-  const [formData, setFormData] = useState<FormData>(() => {
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Sync formData when article prop changes (Edit mode)
+  useEffect(() => {
     if (article) {
-      return {
+      setFormData({
         title: article.title,
         categoryId: article.categoryId,
         status: article.status,
@@ -60,13 +63,15 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
         saleDate: article.saleDate ?? '',
         fees: String(article.fees),
         shippingCostOut: String(article.shippingCostOut),
-      };
+      });
+    } else {
+      setFormData(initialFormData);
     }
-    return initialFormData;
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
+    setErrors({});
+  }, [article]);
   const { categories, loadCategories } = useCategoryStore();
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const purchasePriceInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     loadCategories();
@@ -83,10 +88,20 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
     if (formData.purchasePrice === '' || Number.isNaN(purchasePrice)) {
       newErrors.purchasePrice = 'Kaufpreis ist erforderlich';
     } else if (purchasePrice < 0) {
-      newErrors.purchasePrice = 'Kaufpreis muss >= 0 sein';
+      newErrors.purchasePrice = 'Kaufpreis muss positiv sein';
     }
 
     setErrors(newErrors);
+
+    // Fokus auf erstes fehlerhaftes Feld setzen
+    if (Object.keys(newErrors).length > 0) {
+      if (newErrors.title) {
+        titleInputRef.current?.focus();
+      } else if (newErrors.purchasePrice) {
+        purchasePriceInputRef.current?.focus();
+      }
+    }
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -143,6 +158,7 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
             Titel <span className="text-red-500">*</span>
           </label>
           <input
+            ref={titleInputRef}
             id="article-title"
             type="text"
             value={formData.title}
@@ -212,6 +228,7 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
               Kaufpreis (€) <span className="text-red-500">*</span>
             </label>
             <input
+              ref={purchasePriceInputRef}
               id="article-purchase-price"
               type="number"
               step="0.01"

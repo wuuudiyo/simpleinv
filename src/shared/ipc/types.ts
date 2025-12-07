@@ -1,6 +1,6 @@
 import type { Article, ArticleInput } from '../types/article';
 import type { Category, CategoryInput } from '../types/category';
-import type { AppSettings } from '../types/settings';
+import type { AppSettings, AppInfo } from '../types/settings';
 
 export interface ArticleApi {
   getAll(): Promise<Article[]>;
@@ -32,6 +32,10 @@ export interface MetricsApi {
   getDashboard(): Promise<DashboardMetrics>;
 }
 
+export interface AppApi {
+  getInfo(): Promise<AppInfo>;
+}
+
 export interface TestApi {
   ping(): Promise<string>;
 }
@@ -41,5 +45,6 @@ export interface ElectronApi {
   categories: CategoryApi;
   settings: SettingsApi;
   metrics: MetricsApi;
+  app: AppApi;
   test: TestApi;
 }

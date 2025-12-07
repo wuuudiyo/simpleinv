@@ -3,6 +3,8 @@ import { IPC_CHANNELS } from '../../shared/ipc/channels';
 import { registerSettingsHandlers } from './handlers/settingsHandlers';
 import { registerCategoryHandlers } from './handlers/categoryHandlers';
 import { registerArticleHandlers } from './handlers/articleHandlers';
+import { registerMetricsHandlers } from './handlers/metricsHandlers';
+import { registerAppHandlers } from './handlers/appHandlers';
 
 export function registerIpcHandlers(): void {
   // Test Handler
@@ -17,5 +19,9 @@ export function registerIpcHandlers(): void {
   // Article Handler
   registerArticleHandlers();
 
-  // Metrics Handler werden in Story 3.x implementiert
+  // Metrics Handler
+  registerMetricsHandlers();
+
+  // App Info Handler
+  registerAppHandlers();
 }

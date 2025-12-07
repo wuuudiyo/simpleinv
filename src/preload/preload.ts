@@ -22,6 +22,9 @@ const IPC_CHANNELS = {
   METRICS: {
     GET_DASHBOARD: 'metrics:getDashboard',
   },
+  APP: {
+    GET_INFO: 'app:getInfo',
+  },
   TEST: {
     PING: 'test:ping',
   },
@@ -55,6 +58,9 @@ const api = {
   },
   metrics: {
     getDashboard: () => ipcRenderer.invoke(IPC_CHANNELS.METRICS.GET_DASHBOARD),
+  },
+  app: {
+    getInfo: () => ipcRenderer.invoke(IPC_CHANNELS.APP.GET_INFO),
   },
   test: {
     ping: () => ipcRenderer.invoke(IPC_CHANNELS.TEST.PING),

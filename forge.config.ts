@@ -10,6 +10,9 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    // App-Icon - benötigt icon.ico (Windows), icon.icns (macOS), icon.png (Linux)
+    // Platzhalter-SVG in resources/icon.svg - vor Produktions-Build konvertieren
+    icon: './resources/icon',
   },
   rebuildConfig: {},
   makers: [

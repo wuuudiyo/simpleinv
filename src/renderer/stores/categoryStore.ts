@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Category, CategoryInput } from '../../shared/types/category';
+import { toast } from './uiStore';
 
 interface CategoryState {
   categories: Category[];
@@ -24,6 +25,7 @@ export const useCategoryStore = create<CategoryState>((set) => ({
       set({ categories, isLoading: false });
     } catch (error) {
       set({ error: String(error), isLoading: false });
+      toast.error('Fehler beim Laden der Kategorien');
     }
   },
 
@@ -36,10 +38,12 @@ export const useCategoryStore = create<CategoryState>((set) => ({
         ),
         error: null,
       }));
+      toast.success('Kategorie erstellt');
       return category;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       set({ error: errorMessage });
+      toast.error(errorMessage.includes('UNIQUE') ? 'Kategorie existiert bereits' : 'Fehler beim Erstellen der Kategorie');
       throw error;
     }
   },
@@ -53,10 +57,12 @@ export const useCategoryStore = create<CategoryState>((set) => ({
           .sort((a, b) => a.name.localeCompare(b.name)),
         error: null,
       }));
+      toast.success('Kategorie aktualisiert');
       return category;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       set({ error: errorMessage });
+      toast.error(errorMessage.includes('UNIQUE') ? 'Kategorie existiert bereits' : 'Fehler beim Aktualisieren der Kategorie');
       throw error;
     }
   },
@@ -68,9 +74,11 @@ export const useCategoryStore = create<CategoryState>((set) => ({
         categories: state.categories.filter((c) => c.id !== id),
         error: null,
       }));
+      toast.success('Kategorie gelöscht');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       set({ error: errorMessage });
+      toast.error('Fehler beim Löschen der Kategorie');
       throw error;
     }
   },

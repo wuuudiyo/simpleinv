@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { MetricCard } from './MetricCard';
+import { MetricsRow } from './MetricsRow';
 import { Button } from '../ui/Button';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { CategoryManager } from '../categories';
 import { ArticleFormModal, ArticleTable, ArticleModal } from '../articles';
-import { useArticleStore, useCategoryStore } from '../../stores';
+import { useArticleStore, useCategoryStore, useMetricsStore } from '../../stores';
 import { withCalculations } from '../../../shared/utils/calculations';
 import type { ArticleWithCalculations, ArticleInput } from '../../../shared/types/article';
 
@@ -17,11 +17,19 @@ export function DashboardPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { articles, loadArticles, updateArticle, deleteArticle, isLoading: articlesLoading } = useArticleStore();
   const { categories, loadCategories } = useCategoryStore();
+  const { metrics, loadMetrics } = useMetricsStore();
 
+  // Initial load
   useEffect(() => {
     loadArticles();
     loadCategories();
-  }, [loadArticles, loadCategories]);
+    loadMetrics();
+  }, [loadArticles, loadCategories, loadMetrics]);
+
+  // Refresh metrics when articles change
+  useEffect(() => {
+    loadMetrics();
+  }, [articles, loadMetrics]);
 
   // Transform articles with calculations
   const articlesWithCalcs = useMemo(
@@ -104,11 +112,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Metrics Row */}
-      <div className="grid grid-cols-3 gap-4">
-        <MetricCard title="Gesamtprofit" value="€ 0,00" />
-        <MetricCard title="Offener Warenwert" value="€ 0,00" />
-        <MetricCard title="Nicht verkaufte Artikel" value={String(articles.length)} />
-      </div>
+      <MetricsRow metrics={metrics} />
 
       {/* Action Bar */}
       <div className="flex items-center gap-3">

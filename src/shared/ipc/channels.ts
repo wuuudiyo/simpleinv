@@ -19,6 +19,9 @@ export const IPC_CHANNELS = {
   METRICS: {
     GET_DASHBOARD: 'metrics:getDashboard',
   },
+  APP: {
+    GET_INFO: 'app:getInfo',
+  },
   TEST: {
     PING: 'test:ping',
   },
