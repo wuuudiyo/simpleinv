@@ -2,7 +2,7 @@ import type Database from 'better-sqlite3';
 import type { DashboardMetrics } from '../../shared/ipc/types';
 
 export class MetricsService {
-  constructor(private db: Database.Database) {}
+  constructor(private readonly db: Database.Database) {}
 
   getDashboardMetrics(): DashboardMetrics {
     // Gesamtprofit: Summe aller Profits von "sold" Artikeln

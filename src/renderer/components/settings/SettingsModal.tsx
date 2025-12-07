@@ -3,8 +3,8 @@ import { ThemeSelector } from './ThemeSelector';
 import { InfoSection } from './InfoSection';
 
 interface SettingsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
 }
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {

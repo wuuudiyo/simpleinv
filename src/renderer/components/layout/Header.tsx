@@ -1,7 +1,7 @@
 import { ThemeToggle } from '../settings';
 
 interface HeaderProps {
-  onSettingsClick?: () => void;
+  readonly onSettingsClick?: () => void;
 }
 
 export function Header({ onSettingsClick }: HeaderProps) {

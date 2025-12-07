@@ -20,7 +20,7 @@ export const useMetricsStore = create<MetricsState>((set) => ({
   loadMetrics: async () => {
     set({ isLoading: true, error: null });
     try {
-      const metrics = await window.api.metrics.getDashboard();
+      const metrics = await globalThis.api.metrics.getDashboard();
       set({ metrics, isLoading: false });
     } catch (error) {
       console.error('[MetricsStore] Error loading metrics:', error);

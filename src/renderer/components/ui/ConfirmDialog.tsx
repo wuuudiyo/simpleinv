@@ -55,10 +55,10 @@ export function ConfirmDialog({
     };
 
     dialog.addEventListener('cancel', handleCancel);
-    window.addEventListener('keydown', handleKeyDown);
+    globalThis.addEventListener('keydown', handleKeyDown);
     return () => {
       dialog.removeEventListener('cancel', handleCancel);
-      window.removeEventListener('keydown', handleKeyDown);
+      globalThis.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onConfirm, onCancel]);
 

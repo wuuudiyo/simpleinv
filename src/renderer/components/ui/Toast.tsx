@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
 export interface ToastProps {
-  id: string;
-  message: string;
-  type: 'success' | 'error' | 'info' | 'warning';
-  duration?: number;
-  onClose: (id: string) => void;
+  readonly id: string;
+  readonly message: string;
+  readonly type: 'success' | 'error' | 'info' | 'warning';
+  readonly duration?: number;
+  readonly onClose: (id: string) => void;
 }
 
 const typeStyles = {

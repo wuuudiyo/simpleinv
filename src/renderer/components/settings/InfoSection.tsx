@@ -5,7 +5,7 @@ export function InfoSection() {
   const [appInfo, setAppInfo] = useState<AppInfo | null>(null);
 
   useEffect(() => {
-    window.api.app.getInfo().then(setAppInfo);
+    globalThis.api.app.getInfo().then(setAppInfo);
   }, []);
 
   if (!appInfo) {

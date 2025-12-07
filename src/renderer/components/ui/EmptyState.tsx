@@ -1,8 +1,8 @@
 interface EmptyStateProps {
-  icon?: React.ReactNode;
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
+  readonly icon?: React.ReactNode;
+  readonly title: string;
+  readonly description?: string;
+  readonly action?: React.ReactNode;
 }
 
 export function EmptyState({ icon, title, description, action }: EmptyStateProps) {
@@ -25,7 +25,7 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
 }
 
 // Vordefinierte Icons
-export function PackageIcon({ className = 'w-12 h-12' }: { className?: string }) {
+export function PackageIcon({ className = 'w-12 h-12' }: { readonly className?: string }) {
   return (
     <svg
       className={className}
@@ -44,7 +44,7 @@ export function PackageIcon({ className = 'w-12 h-12' }: { className?: string })
   );
 }
 
-export function FolderIcon({ className = 'w-12 h-12' }: { className?: string }) {
+export function FolderIcon({ className = 'w-12 h-12' }: { readonly className?: string }) {
   return (
     <svg
       className={className}

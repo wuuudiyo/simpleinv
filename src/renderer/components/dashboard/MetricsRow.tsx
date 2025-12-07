@@ -3,15 +3,19 @@ import { formatCurrency } from '../../utils/formatters';
 import type { DashboardMetrics } from '../../../shared/ipc/types';
 
 interface MetricsRowProps {
-  metrics: DashboardMetrics;
+  readonly metrics: DashboardMetrics;
 }
 
 export function MetricsRow({ metrics }: MetricsRowProps) {
   const { totalProfit, openInventoryValue, unsoldCount } = metrics;
 
   // Determine profit color
-  const profitColor: 'positive' | 'negative' | 'default' =
-    totalProfit > 0 ? 'positive' : totalProfit < 0 ? 'negative' : 'default';
+  const getProfitColor = (): 'positive' | 'negative' | 'default' => {
+    if (totalProfit > 0) return 'positive';
+    if (totalProfit < 0) return 'negative';
+    return 'default';
+  };
+  const profitColor = getProfitColor();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
