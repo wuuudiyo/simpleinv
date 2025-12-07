@@ -4,7 +4,7 @@ import { SettingsModal } from '../settings';
 import { ToastContainer } from '../ui';
 
 interface AppLayoutProps {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }
 
 export function AppLayout({ children }: AppLayoutProps) {

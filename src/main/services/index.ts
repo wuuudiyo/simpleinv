@@ -5,8 +5,6 @@ import { MetricsService } from './metricsService';
 let _metricsService: MetricsService | null = null;
 
 export function getMetricsService(): MetricsService {
-  if (!_metricsService) {
-    _metricsService = new MetricsService(databaseService.getDb());
-  }
+  _metricsService ??= new MetricsService(databaseService.getDb());
   return _metricsService;
 }

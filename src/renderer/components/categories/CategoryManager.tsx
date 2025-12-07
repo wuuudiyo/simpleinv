@@ -6,8 +6,8 @@ import { useCategoryStore } from '../../stores';
 import type { Category } from '../../../shared/types/category';
 
 interface CategoryManagerProps {
-  isOpen: boolean;
-  onClose: () => void;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
 }
 
 export function CategoryManager({ isOpen, onClose }: CategoryManagerProps) {

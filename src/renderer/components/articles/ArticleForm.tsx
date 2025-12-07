@@ -5,10 +5,10 @@ import { useCategoryStore } from '../../stores';
 import { Button } from '../ui';
 
 interface ArticleFormProps {
-  article?: Article; // undefined = Create, defined = Edit
-  onSubmit: (data: ArticleInput) => Promise<void>;
-  onCancel: () => void;
-  isSubmitting?: boolean;
+  readonly article?: Article; // undefined = Create, defined = Edit
+  readonly onSubmit: (data: ArticleInput) => Promise<void>;
+  readonly onCancel: () => void;
+  readonly isSubmitting?: boolean;
 }
 
 interface FormData {
@@ -59,7 +59,7 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
         purchaseDate: article.purchaseDate ?? '',
         shippingCostIn: String(article.shippingCostIn),
         salePlatform: article.salePlatform ?? '',
-        salePrice: article.salePrice !== null ? String(article.salePrice) : '',
+        salePrice: article.salePrice === null ? '' : String(article.salePrice),
         saleDate: article.saleDate ?? '',
         fees: String(article.fees),
         shippingCostOut: String(article.shippingCostOut),
@@ -348,7 +348,7 @@ export function ArticleForm({ article, onSubmit, onCancel, isSubmitting }: Artic
           Abbrechen
         </Button>
         <Button type="submit" variant="primary" disabled={isSubmitting}>
-          {isSubmitting ? 'Speichern...' : isEditMode ? 'Speichern' : 'Erstellen'}
+          {isSubmitting ? 'Speichern...' : (isEditMode ? 'Speichern' : 'Erstellen')}
         </Button>
       </div>
     </form>

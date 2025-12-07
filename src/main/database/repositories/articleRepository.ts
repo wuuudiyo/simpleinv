@@ -21,7 +21,7 @@ interface DbArticleRow {
 }
 
 export class ArticleRepository {
-  constructor(private db: Database.Database) {}
+  constructor(private readonly db: Database.Database) {}
 
   getAll(): Article[] {
     const stmt = this.db.prepare(`

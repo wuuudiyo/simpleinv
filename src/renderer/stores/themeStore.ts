@@ -18,7 +18,7 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
   loadTheme: async () => {
     set({ isLoading: true });
     try {
-      const savedTheme = await window.api.settings.get(SETTING_KEYS.THEME);
+      const savedTheme = await globalThis.api.settings.get(SETTING_KEYS.THEME);
       set({ theme: savedTheme ?? DEFAULT_THEME, isLoading: false });
     } catch (error) {
       console.error('Failed to load theme:', error);
@@ -28,7 +28,7 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
 
   setTheme: async (theme: ThemeSettings) => {
     set({ theme });
-    await window.api.settings.set(SETTING_KEYS.THEME, theme);
+    await globalThis.api.settings.set(SETTING_KEYS.THEME, theme);
   },
 
   setMode: async (mode: ThemeMode) => {

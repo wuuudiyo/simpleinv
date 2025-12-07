@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Button } from '../ui';
 
 interface CategoryFormProps {
-  onSubmit: (name: string) => Promise<void>;
-  error?: string | null;
+  readonly onSubmit: (name: string) => Promise<void>;
+  readonly error?: string | null;
 }
 
 export function CategoryForm({ onSubmit, error }: CategoryFormProps) {

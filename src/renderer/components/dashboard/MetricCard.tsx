@@ -1,7 +1,7 @@
 interface MetricCardProps {
-  title: string;
-  value: string;
-  valueColor?: 'default' | 'positive' | 'negative';
+  readonly title: string;
+  readonly value: string;
+  readonly valueColor?: 'default' | 'positive' | 'negative';
 }
 
 const valueColors = {

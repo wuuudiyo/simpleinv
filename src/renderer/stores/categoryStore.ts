@@ -21,7 +21,7 @@ export const useCategoryStore = create<CategoryState>((set) => ({
   loadCategories: async () => {
     set({ isLoading: true, error: null });
     try {
-      const categories = await window.api.categories.getAll();
+      const categories = await globalThis.api.categories.getAll();
       set({ categories, isLoading: false });
     } catch (error) {
       set({ error: String(error), isLoading: false });
@@ -31,7 +31,7 @@ export const useCategoryStore = create<CategoryState>((set) => ({
 
   createCategory: async (input: CategoryInput) => {
     try {
-      const category = await window.api.categories.create(input);
+      const category = await globalThis.api.categories.create(input);
       set((state) => ({
         categories: [...state.categories, category].sort((a, b) =>
           a.name.localeCompare(b.name)
@@ -50,7 +50,7 @@ export const useCategoryStore = create<CategoryState>((set) => ({
 
   updateCategory: async (id: number, input: CategoryInput) => {
     try {
-      const category = await window.api.categories.update(id, input);
+      const category = await globalThis.api.categories.update(id, input);
       set((state) => ({
         categories: state.categories
           .map((c) => (c.id === id ? category : c))
@@ -69,7 +69,7 @@ export const useCategoryStore = create<CategoryState>((set) => ({
 
   deleteCategory: async (id: number) => {
     try {
-      await window.api.categories.delete(id);
+      await globalThis.api.categories.delete(id);
       set((state) => ({
         categories: state.categories.filter((c) => c.id !== id),
         error: null,

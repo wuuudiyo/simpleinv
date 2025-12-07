@@ -2,7 +2,7 @@ import type { ArticleStatus } from '../../../shared/types/article';
 import { STATUS_CONFIG } from '../../../shared/types/article';
 
 interface StatusBadgeProps {
-  status: ArticleStatus;
+  readonly status: ArticleStatus;
 }
 
 export function StatusBadge({ status }: StatusBadgeProps) {

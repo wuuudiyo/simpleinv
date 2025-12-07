@@ -1,11 +1,11 @@
 import Database from 'better-sqlite3';
 import { app } from 'electron';
-import path from 'path';
+import path from 'node:path';
 import { initializeSchema } from './schema';
 
 class DatabaseService {
   private db: Database.Database | null = null;
-  private dbPath: string;
+  private readonly dbPath: string;
 
   constructor() {
     const userDataPath = app.getPath('userData');

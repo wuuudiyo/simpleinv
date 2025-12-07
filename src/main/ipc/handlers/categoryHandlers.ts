@@ -7,9 +7,7 @@ import { databaseService } from '../../database';
 let categoryRepository: CategoryRepository | null = null;
 
 function getRepository(): CategoryRepository {
-  if (!categoryRepository) {
-    categoryRepository = new CategoryRepository(databaseService.getDb());
-  }
+  categoryRepository ??= new CategoryRepository(databaseService.getDb());
   return categoryRepository;
 }
 

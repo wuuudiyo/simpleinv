@@ -6,22 +6,24 @@ import {
   type SortingState,
   type ColumnDef,
   type Column,
+  type CellContext,
+  type HeaderContext,
 } from '@tanstack/react-table';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import type { ArticleWithCalculations } from '../../../shared/types/article';
 import { StatusBadge, EmptyState, PackageIcon } from '../ui';
 import { formatCurrency, formatProfit } from '../../utils/formatters';
 
 interface ArticleTableProps {
-  articles: ArticleWithCalculations[];
-  categories: Map<number, string>;
-  onRowClick: (article: ArticleWithCalculations) => void;
-  isLoading?: boolean;
+  readonly articles: ArticleWithCalculations[];
+  readonly categories: Map<number, string>;
+  readonly onRowClick: (article: ArticleWithCalculations) => void;
+  readonly isLoading?: boolean;
 }
 
 interface SortableHeaderProps {
-  column: Column<ArticleWithCalculations, unknown>;
-  children: React.ReactNode;
+  readonly column: Column<ArticleWithCalculations, unknown>;
+  readonly children: React.ReactNode;
 }
 
 function SortableHeader({ column, children }: SortableHeaderProps) {
@@ -30,12 +32,35 @@ function SortableHeader({ column, children }: SortableHeaderProps) {
     <div className="flex items-center gap-1">
       {children}
       <span className="text-gray-400">
-        {sortDirection === 'asc' && '�'}
-        {sortDirection === 'desc' && '�'}
-        {!sortDirection && '�'}
+        {sortDirection === 'asc' && '↑'}
+        {sortDirection === 'desc' && '↓'}
+        {!sortDirection && '↕'}
       </span>
     </div>
   );
+}
+
+function StatusCell({ row }: CellContext<ArticleWithCalculations, unknown>) {
+  return <StatusBadge status={row.original.status} />;
+}
+
+function PurchasePriceCell({ row }: CellContext<ArticleWithCalculations, unknown>) {
+  return formatCurrency(row.original.purchasePrice);
+}
+
+function SalePriceCell({ row }: CellContext<ArticleWithCalculations, unknown>) {
+  return formatCurrency(row.original.salePrice);
+}
+
+function ProfitCell({ row }: CellContext<ArticleWithCalculations, unknown>) {
+  const { text, className } = formatProfit(row.original.profit);
+  return <span className={className}>{text}</span>;
+}
+
+function createSortableHeader(label: string) {
+  return function SortableHeaderWrapper({ column }: HeaderContext<ArticleWithCalculations, unknown>) {
+    return <SortableHeader column={column}>{label}</SortableHeader>;
+  };
 }
 
 export function ArticleTable({
@@ -46,57 +71,47 @@ export function ArticleTable({
 }: ArticleTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
+  const categoryCell = useCallback(
+    ({ row }: CellContext<ArticleWithCalculations, unknown>) => {
+      const categoryId = row.original.categoryId;
+      return categoryId ? categories.get(categoryId) ?? '' : '';
+    },
+    [categories]
+  );
+
   const columns = useMemo<ColumnDef<ArticleWithCalculations>[]>(
     () => [
       {
         accessorKey: 'title',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Titel</SortableHeader>
-        ),
+        header: createSortableHeader('Titel'),
       },
       {
         accessorKey: 'categoryId',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Kategorie</SortableHeader>
-        ),
-        cell: ({ row }) => {
-          const categoryId = row.original.categoryId;
-          return categoryId ? categories.get(categoryId) ?? '' : '';
-        },
+        header: createSortableHeader('Kategorie'),
+        cell: categoryCell,
       },
       {
         accessorKey: 'status',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Status</SortableHeader>
-        ),
-        cell: ({ row }) => <StatusBadge status={row.original.status} />,
+        header: createSortableHeader('Status'),
+        cell: StatusCell,
       },
       {
         accessorKey: 'purchasePrice',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Kaufpreis</SortableHeader>
-        ),
-        cell: ({ row }) => formatCurrency(row.original.purchasePrice),
+        header: createSortableHeader('Kaufpreis'),
+        cell: PurchasePriceCell,
       },
       {
         accessorKey: 'salePrice',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Verkaufspreis</SortableHeader>
-        ),
-        cell: ({ row }) => formatCurrency(row.original.salePrice),
+        header: createSortableHeader('Verkaufspreis'),
+        cell: SalePriceCell,
       },
       {
         accessorKey: 'profit',
-        header: ({ column }) => (
-          <SortableHeader column={column}>Profit</SortableHeader>
-        ),
-        cell: ({ row }) => {
-          const { text, className } = formatProfit(row.original.profit);
-          return <span className={className}>{text}</span>;
-        },
+        header: createSortableHeader('Profit'),
+        cell: ProfitCell,
       },
     ],
-    [categories]
+    [categoryCell]
   );
 
   const table = useReactTable({

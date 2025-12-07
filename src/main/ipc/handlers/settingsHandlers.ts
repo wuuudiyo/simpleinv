@@ -6,9 +6,7 @@ import { databaseService } from '../../database';
 let settingsRepository: SettingsRepository | null = null;
 
 function getRepository(): SettingsRepository {
-  if (!settingsRepository) {
-    settingsRepository = new SettingsRepository(databaseService.getDb());
-  }
+  settingsRepository ??= new SettingsRepository(databaseService.getDb());
   return settingsRepository;
 }
 

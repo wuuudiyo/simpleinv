@@ -2,11 +2,7 @@ import type Database from 'better-sqlite3';
 import type { Category, CategoryInput } from '../../../shared/types/category';
 
 export class CategoryRepository {
-  private db: Database.Database;
-
-  constructor(db: Database.Database) {
-    this.db = db;
-  }
+  constructor(private readonly db: Database.Database) {}
 
   getAll(): Category[] {
     const stmt = this.db.prepare('SELECT id, name FROM categories ORDER BY name ASC');

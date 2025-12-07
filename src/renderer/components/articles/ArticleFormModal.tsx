@@ -5,10 +5,10 @@ import { useArticleStore } from '../../stores';
 import type { Article, ArticleInput } from '../../../shared/types/article';
 
 interface ArticleFormModalProps {
-  article?: Article; // undefined = Create, defined = Edit
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit?: (data: ArticleInput) => Promise<void>; // Optional für Edit
+  readonly article?: Article; // undefined = Create, defined = Edit
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onSubmit?: (data: ArticleInput) => Promise<void>; // Optional für Edit
 }
 
 export function ArticleFormModal({ article, isOpen, onClose, onSubmit }: ArticleFormModalProps) {

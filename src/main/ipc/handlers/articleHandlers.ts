@@ -7,9 +7,7 @@ import { databaseService } from '../../database';
 let articleRepository: ArticleRepository | null = null;
 
 function getRepository(): ArticleRepository {
-  if (!articleRepository) {
-    articleRepository = new ArticleRepository(databaseService.getDb());
-  }
+  articleRepository ??= new ArticleRepository(databaseService.getDb());
   return articleRepository;
 }
 

@@ -24,7 +24,7 @@ export const useArticleStore = create<ArticleState>((set) => ({
   loadArticles: async () => {
     set({ isLoading: true, error: null });
     try {
-      const articles = await window.api.articles.getAll();
+      const articles = await globalThis.api.articles.getAll();
       set({ articles, isLoading: false });
     } catch (error) {
       set({ error: String(error), isLoading: false });
@@ -34,7 +34,7 @@ export const useArticleStore = create<ArticleState>((set) => ({
 
   createArticle: async (input: ArticleInput) => {
     try {
-      const article = await window.api.articles.create(input);
+      const article = await globalThis.api.articles.create(input);
       // Artikel zur Liste hinzufügen (am Anfang, da neueste zuerst)
       set((state) => ({
         articles: [article, ...state.articles],
@@ -51,7 +51,7 @@ export const useArticleStore = create<ArticleState>((set) => ({
 
   updateArticle: async (id: number, input: Partial<ArticleInput>) => {
     try {
-      const updatedArticle = await window.api.articles.update(id, input);
+      const updatedArticle = await globalThis.api.articles.update(id, input);
       // Artikel in der Liste ersetzen
       set((state) => ({
         articles: state.articles.map((a) => (a.id === id ? updatedArticle : a)),
@@ -68,7 +68,7 @@ export const useArticleStore = create<ArticleState>((set) => ({
 
   deleteArticle: async (id: number) => {
     try {
-      await window.api.articles.delete(id);
+      await globalThis.api.articles.delete(id);
       // Artikel aus lokaler Liste entfernen
       set((state) => ({
         articles: state.articles.filter((a) => a.id !== id),

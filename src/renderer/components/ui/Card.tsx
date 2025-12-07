@@ -1,7 +1,7 @@
 interface CardProps {
-  children: React.ReactNode;
-  title?: string;
-  className?: string;
+  readonly children: React.ReactNode;
+  readonly title?: string;
+  readonly className?: string;
 }
 
 export function Card({ children, title, className = '' }: CardProps) {

@@ -1,6 +1,6 @@
 interface DetailRowProps {
-  label: string;
-  value: React.ReactNode;
+  readonly label: string;
+  readonly value: React.ReactNode;
 }
 
 export function DetailRow({ label, value }: DetailRowProps) {

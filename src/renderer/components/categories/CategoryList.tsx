@@ -3,9 +3,9 @@ import type { Category } from '../../../shared/types/category';
 import { EmptyState, FolderIcon } from '../ui';
 
 interface CategoryListProps {
-  categories: Category[];
-  onUpdate: (id: number, name: string) => Promise<void>;
-  onDelete: (category: Category) => void;
+  readonly categories: Category[];
+  readonly onUpdate: (id: number, name: string) => Promise<void>;
+  readonly onDelete: (category: Category) => void;
 }
 
 export function CategoryList({ categories, onUpdate, onDelete }: CategoryListProps) {

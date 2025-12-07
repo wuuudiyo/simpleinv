@@ -6,12 +6,12 @@ import { formatCurrency, formatProfit, formatDate, formatRoi } from '../../utils
 import type { ArticleWithCalculations } from '../../../shared/types/article';
 
 interface ArticleModalProps {
-  article: ArticleWithCalculations | null;
-  categoryName: string | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onEdit: () => void;
-  onDelete: () => void;
+  readonly article: ArticleWithCalculations | null;
+  readonly categoryName: string | null;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onEdit: () => void;
+  readonly onDelete: () => void;
 }
 
 export function ArticleModal({
@@ -70,7 +70,11 @@ export function ArticleModal({
           Berechnungen
         </h3>
         <div className="space-y-2">
-          {article.salePrice !== null ? (
+          {article.salePrice === null ? (
+            <p className="text-gray-400 dark:text-gray-500 italic">
+              Noch nicht verkauft
+            </p>
+          ) : (
             <>
               <DetailRow
                 label="Profit"
@@ -89,10 +93,6 @@ export function ArticleModal({
                 }
               />
             </>
-          ) : (
-            <p className="text-gray-400 dark:text-gray-500 italic">
-              Noch nicht verkauft
-            </p>
           )}
         </div>
       </section>

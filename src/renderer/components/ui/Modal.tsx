@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly title: string;
+  readonly children: React.ReactNode;
+  readonly size?: 'sm' | 'md' | 'lg';
 }
 
 const sizeClasses = {
